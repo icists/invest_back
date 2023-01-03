@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 1.7.6')
+    await ctx.send('ver 2.0.0')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -129,7 +129,7 @@ async def base_setting(ctx, round_num):
             f'{team_num}' : 0
         })
     '''
-    await ctx.send(f'ICISTS 투자게임 - {round_num} 라운드 기본 설정을 시작합니다.\n')
+    await ctx.send(f'ICISTS 투자게임 - {round_num} 라운드 기본 설정을 완료했습니다.\n')
     
 
 @bot.command()
