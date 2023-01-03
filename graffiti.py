@@ -26,11 +26,11 @@ firebase_admin.initialize_app(cred,{
 global team_number
 global startup_list 
 startup_list = ['QTC','TOS','ABC','EAT','ICI','STS','KAI']
-team_number = 10
+team_number = 18
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 1.4.0')
+    await ctx.send('ver 1.5.0')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -82,7 +82,7 @@ async def function1(ctx):
     index = 0
     for startup_name in startup_list:
         for team_num in range(1,team_number+1):
-            dir = db.reference(f'rounds/{round_num}/investResult/{startup_name}/{team_num}')
+            dir = db.reference(f'rounds/{round_num}/investResult/{startup_name}')
             dir_investmentData = db.reference(f'rounds/{round_num}/investAmount/{startup_name}/{team_num}')
             dir_valuation = db.reference(f'rounds/{round_num}/valuation/{startup_name}')
             dir_score = db.reference(f'rounds/{round_num}/score/{startup_name}')
@@ -91,7 +91,7 @@ async def function1(ctx):
             valuation = int((invest_list[index]/avg_score)**(alpha) * (score / avg_score) * avg_investment)
             dir_valuation({valuation})
             formula = int(((invest_list[index]/avg_score)**(alpha - 1)) * invest * (score / avg_score))
-            dir.update({formula}) # update의 새로운 사용
+            dir.update({f'{team_num}' : formula}) # update의 새로운 사용
         index += 1
     await ctx.send(f'ICISTS 투자게임 - {round_num}라운드 각 팀에게 돌려줄 금액 계산이 완료되었습니다. ')
 
@@ -115,14 +115,29 @@ async def setting(ctx, round_num):
     await ctx.send(f'ICISTS 투자게임 - {round_num} 라운드 Firebase 데이터베이스 설정을 시작합니다.\n')
     
     for team_num in range(1, team_number + 1):
-        for startup_name in startup_list:
-            dir_investAmount= db.reference(f'rounds/{round_num}/investAmount/{team_num}')
-            dir_investAmount.push({ f'{startup_name}' : 0})
-
+        dir_investAmount= db.reference(f'rounds/{round_num}/investAmount/{team_num}')
+        dir_investAmount.update({ 
+            f'{startup_list[0]}' : 0,
+            f'{startup_list[1]}' : 0,
+            f'{startup_list[2]}' : 0,
+            f'{startup_list[3]}' : 0,
+            f'{startup_list[4]}' : 0,
+            f'{startup_list[5]}' : 0,
+            f'{startup_list[6]}' : 0,
+            f'{startup_list[7]}' : 0
+        })
     for team_num in range(1, team_number + 1):
-        for startup_name in startup_list:
-            dir_investResult= db.reference(f'rounds/{round_num}/investResult/{team_num}/')
-            dir_investResult.push({ f'{startup_name}' : 0})
+        dir_investResult= db.reference(f'rounds/{round_num}/investResult/{team_num}')
+        dir_investResult.update({ 
+            f'{startup_list[0]}' : 0,
+            f'{startup_list[1]}' : 0,
+            f'{startup_list[2]}' : 0,
+            f'{startup_list[3]}' : 0,
+            f'{startup_list[4]}' : 0,
+            f'{startup_list[5]}' : 0,
+            f'{startup_list[6]}' : 0,
+            f'{startup_list[7]}' : 0
+        })
 
     for team_num in range(1, team_number + 1):
         dir_score = db.reference(f'rounds/{round_num}/score')
