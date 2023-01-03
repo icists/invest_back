@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 1.6.0')
+    await ctx.send('ver 1.6.1')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -158,7 +158,7 @@ async def setting(ctx, round_num):
 
     
     dir_score = db.reference(f'rounds/{round_num}/score')
-    dir_score.update({
+    dir_score.set({
         f'{startup_list[0]}' : 10,
         f'{startup_list[1]}' : 8,
         f'{startup_list[2]}' : 4,
