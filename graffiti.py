@@ -30,7 +30,7 @@ team_number = 10
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 1.3.7')
+    await ctx.send('ver 1.4.0')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -113,21 +113,23 @@ async def function2(ctx):
 @bot.command()
 async def setting(ctx, round_num):
     await ctx.send(f'ICISTS 투자게임 - {round_num} 라운드 Firebase 데이터베이스 설정을 시작합니다.\n')
+    
+    for team_num in range(1, team_number + 1):
+        for startup_name in startup_list:
+            dir_investAmount= db.reference(f'rounds/{round_num}/investAmount/{team_num}')
+            dir_investAmount.push({ f'{startup_name}' : 0})
+
+    for team_num in range(1, team_number + 1):
+        for startup_name in startup_list:
+            dir_investResult= db.reference(f'rounds/{round_num}/investResult/{team_num}/')
+            dir_investResult.push({ f'{startup_name}' : 0})
 
     for team_num in range(1, team_number + 1):
         dir_score = db.reference(f'rounds/{round_num}/score')
         dir_score.update({
             f'{team_num}' : 5
         })
-    
-    for team_num in range(1, team_number + 1):
-        for startup_name in startup_list:
-            dir_investAmount= db.reference(f'rounds/{round_num}/investAmount/{team_num}/{startup_name}')
-            dir_investAmount.push({0})
-    for team_num in range(1, team_number + 1):
-        for startup_name in startup_list:
-            dir_investResult= db.reference(f'rounds/{round_num}/investResult/{team_num}/{startup_name}')
-            dir_investResult.push({0})
+
     for startup_name in startup_list :
         dir_valuation = db.reference(f'rounds/{round_num}/valuation')
         dir_valuation.update({
