@@ -31,7 +31,7 @@ startup_number = 4
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 1.3.0')
+    await ctx.send('ver 1.3.3')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
