@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 1.7.3')
+    await ctx.send('ver 1.7.4')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -83,7 +83,7 @@ async def function1(ctx):
     for startup_name in startup_list:
         for team_num in range(1,team_number+1):
             dir = db.reference(f'rounds/{round_num}/investResult/{team_num}')
-            dir_investmentData = db.reference(f'rounds/{round_num}/investAmount/{startup_name}')
+            dir_investmentData = db.reference(f'rounds/{round_num}/investAmount/{team_num}/{startup_name}')
             dir_valuation = db.reference(f'rounds/{round_num}/valuation/{startup_name}')
             dir_score = db.reference(f'rounds/{round_num}/score/{startup_name}')
             score = dir_score.get()
