@@ -30,7 +30,7 @@ team_number = 18
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 1.5.3')
+    await ctx.send('ver 1.5.4')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -116,7 +116,7 @@ async def setting(ctx, round_num):
 
     for team_num in range(1, team_number + 1):
         dir_investAmount= db.reference(f'rounds/{round_num}/investAmount/{team_num}')
-        dir_investAmount.update({ 
+        dir_investAmount.set({ 
             f'{startup_list[0]}' : 0,
             f'{startup_list[1]}' : 0,
             f'{startup_list[2]}' : 0,
@@ -128,7 +128,7 @@ async def setting(ctx, round_num):
         })
     for team_num in range(1, team_number + 1):
         dir_investResult= db.reference(f'rounds/{round_num}/investResult/{team_num}')
-        dir_investResult.update({ 
+        dir_investResult.set({ 
             f'{startup_list[0]}' : 0,
             f'{startup_list[1]}' : 0,
             f'{startup_list[2]}' : 0,
