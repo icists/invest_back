@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 1.5.8')
+    await ctx.send('ver 1.6.0')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -111,10 +111,8 @@ async def function2(ctx):
     await ctx.send(f'ICISTS 투자게임 - {round_num}라운드 각 팀의 투자 결과 정산이 완료되었습니다')
 
 @bot.command()
-async def setting(ctx, round_num):
-    await ctx.send(f'ICISTS 투자게임 - {round_num} 라운드 Firebase 데이터베이스 설정을 시작합니다.\n')
-
-    '''
+async def base_setting(ctx, round_num):
+    await ctx.send(f'ICISTS 투자게임 - {round_num} 라운드 기본 설정을 시작합니다.\n')
     for team_num in range(1,team_number+1):
         dir = db.reference(f'rounds/{round_num}/investAmount')
         dir.update({
@@ -126,7 +124,12 @@ async def setting(ctx, round_num):
         dir.update({
             f'{team_num}' : 0
         })
-    '''
+        await ctx.send(f'ICISTS 투자게임 - {round_num} 라운드 기본 설정을 완료되었습니다.\n')
+    
+
+@bot.command()
+async def setting(ctx, round_num):
+    await ctx.send(f'ICISTS 투자게임 - {round_num} 라운드 Firebase 데이터베이스 설정을 시작합니다.\n')
 
     for team_num in range(1, team_number + 1):
         dir_investAmount= db.reference(f'rounds/{round_num}/investAmount/{team_num}')
@@ -154,12 +157,17 @@ async def setting(ctx, round_num):
         })
 
     
-
-    for team_num in range(1, team_number + 1):
-        dir_score = db.reference(f'rounds/{round_num}/score')
-        dir_score.update({
-            f'{team_num}' : 5
-        })
+    dir_score = db.reference(f'rounds/{round_num}/score')
+    dir_score.update({
+        f'{startup_list[0]}' : 10,
+        f'{startup_list[1]}' : 8,
+        f'{startup_list[2]}' : 4,
+        f'{startup_list[3]}' : 6,
+        f'{startup_list[4]}' : 5,
+        f'{startup_list[5]}' : 4,
+        f'{startup_list[6]}' : 3,
+        f'{startup_list[7]}' : 2
+    })
 
     for startup_name in startup_list :
         dir_valuation = db.reference(f'rounds/{round_num}/valuation')
