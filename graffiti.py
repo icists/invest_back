@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 1.7.0')
+    await ctx.send('ver 1.7.2')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -54,7 +54,7 @@ async def function1(ctx):
     
     for startup_name in startup_list:  
         for team_num in range(1,team_number + 1) :
-            dir_investmentData = db.reference(f'rounds/{round_num}/investAmount/{startup_name}/{team_num}')
+            dir_investmentData = db.reference(f'rounds/{round_num}/investAmount/{team_num}/{startup_name}')
             invest = int(dir_investmentData.get())
             total_investment += invest
     avg_investment = total_investment / 8
@@ -65,7 +65,7 @@ async def function1(ctx):
     for startup_name in startup_list: # 각 기업별 각 팀에게 돌려줄 금액 계산
         total_invest_eachCompany = 0
         for team_num in range(1, team_number + 1) :
-            dir_investmentData = db.reference(f'rounds/{round_num}/investAmount/{startup_name}/{team_num}')
+            dir_investmentData = db.reference(f'rounds/{round_num}/investAmount/{team_num}/{startup_name}')
             invest = int(dir_investmentData.get())
             total_invest_eachCompany += invest
         invest_list[index] = total_invest_eachCompany
@@ -82,7 +82,7 @@ async def function1(ctx):
     index = 0
     for startup_name in startup_list:
         for team_num in range(1,team_number+1):
-            dir = db.reference(f'rounds/{round_num}/investResult/{startup_name}')
+            dir = db.reference(f'rounds/{round_num}/investResult/{team_num}')
             dir_investmentData = db.reference(f'rounds/{round_num}/investAmount/{startup_name}')
             dir_valuation = db.reference(f'rounds/{round_num}/valuation/{startup_name}')
             dir_score = db.reference(f'rounds/{round_num}/score/{startup_name}')
@@ -103,7 +103,7 @@ async def function2(ctx):
     for team_num in range(1,team_number+1):
         team_account = 0
         for startup_name in startup_list:
-            dir_investResult = db.reference(f'rounds/{round_num}/investResult/{startup_name}/{team_num}')
+            dir_investResult = db.reference(f'rounds/{round_num}/investResult/{team_num}/{startup_name}')
             team_account += dir_investResult.get()
         dir_teamAccount = db.reference(f'teams/{team_num}')
         dir_teamAccount.update({'account' : team_account})
