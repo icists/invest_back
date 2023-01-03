@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 1.6.3')
+    await ctx.send('ver 1.7.0')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -55,7 +55,7 @@ async def function1(ctx):
     for startup_name in startup_list:  
         for team_num in range(1,team_number + 1) :
             dir_investmentData = db.reference(f'rounds/{round_num}/investAmount/{startup_name}/{team_num}')
-            invest = dir_investmentData.get()
+            invest = int(dir_investmentData.get())
             total_investment += invest
     avg_investment = total_investment / 8
     await ctx.send(f'전체 스타트업 평균 투자액 : {avg_investment}')
@@ -66,7 +66,7 @@ async def function1(ctx):
         total_invest_eachCompany = 0
         for team_num in range(1, team_number + 1) :
             dir_investmentData = db.reference(f'rounds/{round_num}/investAmount/{startup_name}/{team_num}')
-            invest = dir_investmentData.get()
+            invest = int(dir_investmentData.get())
             total_invest_eachCompany += invest
         invest_list[index] = total_invest_eachCompany
         index += 1
@@ -83,13 +83,13 @@ async def function1(ctx):
     for startup_name in startup_list:
         for team_num in range(1,team_number+1):
             dir = db.reference(f'rounds/{round_num}/investResult/{startup_name}')
-            dir_investmentData = db.reference(f'rounds/{round_num}/investAmount/{startup_name}/{team_num}')
+            dir_investmentData = db.reference(f'rounds/{round_num}/investAmount/{startup_name}')
             dir_valuation = db.reference(f'rounds/{round_num}/valuation/{startup_name}')
             dir_score = db.reference(f'rounds/{round_num}/score/{startup_name}')
             score = dir_score.get()
-            invest = dir_investmentData.get()
+            invest = int(dir_investmentData.get())
             valuation = int((invest_list[index]/avg_score)**(alpha) * (score / avg_score) * avg_investment)
-            dir_valuation({valuation})
+            dir_valuation.update({f'{team_num}' : valuation})
             formula = int(((invest_list[index]/avg_score)**(alpha - 1)) * invest * (score / avg_score))
             dir.update({f'{team_num}' : formula}) # update의 새로운 사용
         index += 1
