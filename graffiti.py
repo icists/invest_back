@@ -25,13 +25,14 @@ firebase_admin.initialize_app(cred,{
 
 global team_number
 global startup_number
-global startup_list
+global startup_list 
+startup_list = ['QTC','TOS','ABC','EAT','ICI','STS','KAI']
 team_number = 10
 startup_number = 4
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 1.3.3')
+    await ctx.send('ver 1.3.4')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
