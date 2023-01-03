@@ -107,4 +107,4 @@ async def sum_account(ctx):
 
     await ctx.send(f'ICISTS 투자게임 - {round_num}라운드 각 팀의 투자 결과 정산이 완료되었습니다')
 
-    bot.run('MTA1ODMwMjA2NTAxNDc1NTMzOA.GAnyUX.8MQ2p2TfipWZxnjGYKyDt5gRiHp3Ku8uCYCJfQ')
+    bot.run(os.environ['token'])
