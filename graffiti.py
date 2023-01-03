@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 1.5.7')
+    await ctx.send('ver 1.5.8')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -114,6 +114,7 @@ async def function2(ctx):
 async def setting(ctx, round_num):
     await ctx.send(f'ICISTS 투자게임 - {round_num} 라운드 Firebase 데이터베이스 설정을 시작합니다.\n')
 
+    '''
     for team_num in range(1,team_number+1):
         dir = db.reference(f'rounds/{round_num}/investAmount')
         dir.update({
@@ -152,7 +153,7 @@ async def setting(ctx, round_num):
             f'{startup_list[7]}' : 0
         })
 
-    '''
+    
 
     for team_num in range(1, team_number + 1):
         dir_score = db.reference(f'rounds/{round_num}/score')
