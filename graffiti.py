@@ -15,8 +15,8 @@ from firebase_admin import credentials
 from firebase_admin import db
 
 game = discord.Game("ICISTS-KAIST")
-bot = commands.Bot(command_prefix='!', Status=discord.Status.online, activity=game,intents=discord.Intents.default())
-client = discord.Client(intents = discord.Intents.default())
+bot = commands.Bot(command_prefix='!', Status=discord.Status.online, activity=game)
+client = discord.Client()
 
 cred = credentials.Certificate('investment-game-e04fb-firebase-adminsdk-q4spd-bcff64ea68.json') 
 firebase_admin.initialize_app(cred,{
