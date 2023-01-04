@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.2.5')
+    await ctx.send('ver 2.2.6')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -118,6 +118,8 @@ async def function2(ctx):
         for startup_name in startup_list:
              total_invest_eachTeam += dict_invest[team_num][startup_name]
         balance[team_num] = dict_team[team_num] - total_invest_eachTeam
+
+    await ctx.send('ICISTS 투자게임 - 각 팀의 투자 후 잔액 처리 완료')
 
     for team_num in range(1,team_number+1):
         team_account = balance[team_num]
