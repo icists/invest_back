@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.0.2')
+    await ctx.send('ver 2.0.4')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -52,6 +52,8 @@ async def function1(ctx , input):
     total_investment = 0
     
     alpha = float(input)
+
+    await ctx.send(f'function1 작동 시작')
     
     for startup_name in startup_list:  
         for team_num in range(1,team_number + 1) :
@@ -83,7 +85,7 @@ async def function1(ctx , input):
     index = 0
     for startup_name in startup_list:
         for team_num in range(1,team_number+1):
-            dir = db.reference(f'rounds/{round_num}/investResult')
+            dir = db.reference(f'rounds/{round_num}/investResult/{team_num}')
             dir_investmentData = db.reference(f'rounds/{round_num}/investAmount/{team_num}/{startup_name}')
             dir_valuation = db.reference(f'rounds/{round_num}/valuation')
             dir_score = db.reference(f'rounds/{round_num}/score/{startup_name}')
@@ -100,6 +102,8 @@ async def function1(ctx , input):
 async def function2(ctx):
     dir_round_num = db.reference('status/currentRound')
     round_num = dir_round_num.get() 
+
+    await ctx.send(f'function2 작동 시작')
 
     for team_num in range(1,team_number+1):
         team_account = 0
