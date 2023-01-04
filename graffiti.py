@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.0.4')
+    await ctx.send('ver 2.0.6')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -123,7 +123,7 @@ async def base_setting(ctx, round_num):
         dir.update({
             f'{startup_name}' : 0
         })
-    '''
+    
     for team_num in range(1,team_number+1):
         dir = db.reference(f'rounds/{round_num}/investAmount')
         dir.update({
@@ -135,7 +135,7 @@ async def base_setting(ctx, round_num):
         dir.update({
             f'{team_num}' : 0
         })
-    '''
+    
     await ctx.send(f'ICISTS 투자게임 - {round_num} 라운드 기본 설정을 완료했습니다.\n')
     
 
@@ -146,14 +146,14 @@ async def setting(ctx, round_num):
     for team_num in range(1, team_number + 1):
         dir_investAmount= db.reference(f'rounds/{round_num}/investAmount/{team_num}')
         dir_investAmount.update({ 
-            f'{startup_list[0]}' : random.random() * 125,
-            f'{startup_list[1]}' : random.random() * 125,
-            f'{startup_list[2]}' : random.random() * 125,
-            f'{startup_list[3]}' : random.random() * 125,
-            f'{startup_list[4]}' : random.random() * 125,
-            f'{startup_list[5]}' : random.random() * 125,
-            f'{startup_list[6]}' : random.random() * 125,
-            f'{startup_list[7]}' : random.random() * 125
+            f'{startup_list[0]}' : int(random.random() * 125),
+            f'{startup_list[1]}' : int(random.random() * 125),
+            f'{startup_list[2]}' : int(random.random() * 125),
+            f'{startup_list[3]}' : int(random.random() * 125),
+            f'{startup_list[4]}' : int(random.random() * 125),
+            f'{startup_list[5]}' : int(random.random() * 125),
+            f'{startup_list[6]}' : int(random.random() * 125),
+            f'{startup_list[7]}' : int(random.random() * 125)
         })
     for team_num in range(1, team_number + 1):
         dir_investResult= db.reference(f'rounds/{round_num}/investResult/{team_num}')
