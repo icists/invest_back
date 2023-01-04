@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.2.1')
+    await ctx.send('ver 2.2.2')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -55,8 +55,7 @@ async def function1(ctx , input):
 
     await ctx.send(f'function1 작동 시작')
 
-    dir_investmentData = db.reference(f'rounds/{round_num}/investAmount')
-    dict_invest = dir_investmentData.get()
+    dict_invest = db.reference(f'rounds/{round_num}/investAmount').get()
     
     for startup_name in startup_list:  
         for team_num in range(1,team_number + 1) :
@@ -75,21 +74,20 @@ async def function1(ctx , input):
     await ctx.send('각 스타트업별 받은 총 투자액 정산이 완료되었습니다.')
     
     total_score = 0
-    dict_score = db.reference(f'rounds/{round_num}/score')
+    dict_score = db.reference(f'rounds/{round_num}/score').get()
     for startup_name in startup_list: # 각 기업별 VC에게 받은 평가
         total_score += dict_score[startup_name]
     avg_score = total_score / 8
     await ctx.send(f'각 스타트업에 대한 VC 평가 완료, 평균 점수 : {avg_score}')
 
     index = 0
+    dict_valuation = db.reference(f'rounds/{round_num}/valuation').get()
     for startup_name in startup_list:
         for team_num in range(1,team_number+1):
             dir = db.reference(f'rounds/{round_num}/investResult/{team_num}')
-            dir_investmentData = db.reference(f'rounds/{round_num}/investAmount/{team_num}/{startup_name}')
             dir_valuation = db.reference(f'rounds/{round_num}/valuation')
-            dir_score = db.reference(f'rounds/{round_num}/score/{startup_name}')
-            score = dir_score.get()
-            invest = int(dir_investmentData.get())
+            score = dict_score[startup_name]
+            invest = dict_invest[team_num][startup_name]
             valuation = int((invest_list[index]/avg_investment)**(alpha) * (score / avg_score) * avg_investment)
             dir_valuation.update({f'{startup_name}' : valuation})
             formula = int(((invest_list[index]/avg_investment)**(alpha - 1)) * invest * (score / avg_score))
