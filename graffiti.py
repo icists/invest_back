@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.1.3')
+    await ctx.send('ver 2.1.4')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
