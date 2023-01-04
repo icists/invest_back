@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.1.9')
+    await ctx.send('ver 2.2.0')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -54,12 +54,13 @@ async def function1(ctx , input):
     alpha = float(input)
 
     await ctx.send(f'function1 작동 시작')
+
+    dir_investmentData = db.reference(f'rounds/{round_num}/investAmount')
+    dict_invest = dir_investmentData.get()
     
     for startup_name in startup_list:  
         for team_num in range(1,team_number + 1) :
-            dir_investmentData = db.reference(f'rounds/{round_num}/investAmount/{team_num}/{startup_name}')
-            invest = int(dir_investmentData.get())
-            total_investment += invest
+            total_investment += dict_invest[team_num][startup_name]
     avg_investment = total_investment / 8
     await ctx.send(f'전체 스타트업 평균 투자액 : {avg_investment}')
 
