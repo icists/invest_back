@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.1.8')
+    await ctx.send('ver 2.1.9')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -170,14 +170,14 @@ async def setting(ctx, round_num):
     for team_num in range(1, team_number + 1):
         dir_investAmount= db.reference(f'rounds/{round_num}/investAmount/{team_num}/')
         dir_investAmount.set({ 
-            f'{startup_list[0]}' : int(random.random()*1250000),
-            f'{startup_list[1]}' : int(random.random()*1250000),
-            f'{startup_list[2]}' : int(random.random()*1250000),
-            f'{startup_list[3]}' : int(random.random()*1250000),
-            f'{startup_list[4]}' : int(random.random()*1250000),
-            f'{startup_list[5]}' : int(random.random()*1250000),
-            f'{startup_list[6]}' : int(random.random()*1250000),
-            f'{startup_list[7]}' : int(random.random()*1250000)
+            f'{startup_list[0]}' : int(random.random()*125000),
+            f'{startup_list[1]}' : int(random.random()*125000),
+            f'{startup_list[2]}' : int(random.random()*125000),
+            f'{startup_list[3]}' : int(random.random()*125000),
+            f'{startup_list[4]}' : int(random.random()*125000),
+            f'{startup_list[5]}' : int(random.random()*125000),
+            f'{startup_list[6]}' : int(random.random()*125000),
+            f'{startup_list[7]}' : int(random.random()*125000)
 
         })
     for team_num in range(1, team_number + 1):
