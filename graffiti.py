@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.0.0')
+    await ctx.send('ver 2.0.1')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -46,11 +46,12 @@ async def set_round(ctx, set_round_num):
         await ctx.send(f'ICISTS 투자게임 - 올바른 숫자를 입력해주세요.')
 
 @bot.command()
-async def function1(ctx):
+async def function1(ctx , input):
     dir_round_num = db.reference('status/currentRound')
     round_num = dir_round_num.get() 
     total_investment = 0
-    alpha = 1.5
+    
+    alpha = float(input)
     
     for startup_name in startup_list:  
         for team_num in range(1,team_number + 1) :
@@ -82,7 +83,7 @@ async def function1(ctx):
     index = 0
     for startup_name in startup_list:
         for team_num in range(1,team_number+1):
-            dir = db.reference(f'rounds/{round_num}/investResult/{team_num}')
+            dir = db.reference(f'rounds/{round_num}/investResult')
             dir_investmentData = db.reference(f'rounds/{round_num}/investAmount/{team_num}/{startup_name}')
             dir_valuation = db.reference(f'rounds/{round_num}/valuation/{startup_name}')
             dir_score = db.reference(f'rounds/{round_num}/score/{startup_name}')
@@ -113,9 +114,11 @@ async def function2(ctx):
 @bot.command()
 async def base_setting(ctx, round_num):
     await ctx.send(f'ICISTS 투자게임 - {round_num} 라운드 기본 설정을 시작합니다.\n')
-    for team_num in range(1,team_number+1):
-        dir = db.reference(f'teams/{team_num}')
-        dir.update({'account' : 0})
+    for startup_name in startup_list:
+        dir = db.reference(f'rounds/{round_num}/valuation')
+        dir.update({
+            f'{startup_name}' : 0
+        })
     '''
     for team_num in range(1,team_number+1):
         dir = db.reference(f'rounds/{round_num}/investAmount')
