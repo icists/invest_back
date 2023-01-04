@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.2.4')
+    await ctx.send('ver 2.2.5')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -107,11 +107,22 @@ async def function2(ctx):
 
     await ctx.send(f'function2 작동 시작')
 
+    dir_result = db.reference(f'rounds/{round_num}/investResult')
+    dict_result = dir_result.get()
+    dict_invest = db.reference(f'rounds/{round_num}/investAmount').get()
+    dict_team = db.reference(f'rounds/{round_num}/teams').get()
+    balance =[0] * 25 # 팀별 잔액, 인덱스 0은 사용 안함
+
     for team_num in range(1,team_number+1):
-        team_account = 0
+        total_invest_eachTeam = 0
         for startup_name in startup_list:
-            dir_investResult = db.reference(f'rounds/{round_num}/investResult/{team_num}/{startup_name}')
-            team_account += dir_investResult.get()
+             total_invest_eachTeam += dict_invest[team_num][startup_name]
+        balance[team_num] = dict_team[team_num] - total_invest_eachTeam
+
+    for team_num in range(1,team_number+1):
+        team_account = balance[team_num]
+        for startup_name in startup_list:
+            team_account += dict_result[team_num][startup_name]
         dir_teamAccount = db.reference(f'teams/{team_num}')
         dir_teamAccount.update({'account' : team_account})
 
