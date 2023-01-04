@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.1.4')
+    await ctx.send('ver 2.1.6')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -137,6 +137,22 @@ async def base_setting(ctx, round_num):
         })
     
     await ctx.send(f'ICISTS 투자게임 - {round_num} 라운드 기본 설정을 완료했습니다.\n')
+
+@bot.command()
+async def able(ctx):
+    dir = db.reference('status')
+    dir.update({
+        'investable' : True
+    })
+    await ctx.send('ICISTS 투자게임 - 현재 투자가 가능하게 되었습니다.')
+
+@bot.command()
+async def unable(ctx):
+    dir = db.reference('status')
+    dir.update({
+        'investable' : False
+    })
+    await ctx.send('ICISTS 투자게임 - 현재 투자가 불가능하게 되었습니다.')
     
 
 @bot.command()
@@ -154,14 +170,14 @@ async def setting(ctx, round_num):
     for team_num in range(1, team_number + 1):
         dir_investAmount= db.reference(f'rounds/{round_num}/investAmount/{team_num}')
         dir_investAmount.set({ 
-            f'{startup_list[0]}' : int(random.random()*125),
-            f'{startup_list[1]}' : int(random.random()*125),
-            f'{startup_list[2]}' : int(random.random()*125),
-            f'{startup_list[3]}' : int(random.random()*125),
-            f'{startup_list[4]}' : int(random.random()*125),
-            f'{startup_list[5]}' : int(random.random()*125),
-            f'{startup_list[6]}' : int(random.random()*125),
-            f'{startup_list[7]}' : int(random.random()*125)
+            f'{startup_list[0]}' : int(random.random()*1250000),
+            f'{startup_list[1]}' : int(random.random()*1250000),
+            f'{startup_list[2]}' : int(random.random()*1250000),
+            f'{startup_list[3]}' : int(random.random()*1250000),
+            f'{startup_list[4]}' : int(random.random()*1250000),
+            f'{startup_list[5]}' : int(random.random()*1250000),
+            f'{startup_list[6]}' : int(random.random()*1250000),
+            f'{startup_list[7]}' : int(random.random()*1250000)
 
         })
     for team_num in range(1, team_number + 1):
