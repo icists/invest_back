@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.1.0')
+    await ctx.send('ver 2.1.1')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -91,9 +91,9 @@ async def function1(ctx , input):
             dir_score = db.reference(f'rounds/{round_num}/score/{startup_name}')
             score = dir_score.get()
             invest = int(dir_investmentData.get())
-            valuation = int((invest_list[index]/avg_score)**(alpha) * (score / avg_score) * avg_investment)
+            valuation = int((invest_list[index]/avg_investment)**(alpha) * (score / avg_score) * avg_investment)
             dir_valuation.update({f'{startup_name}' : valuation})
-            formula = int(((invest_list[index]/avg_score)**(alpha - 1)) * invest * (score / avg_score))
+            formula = int(((invest_list[index]/avg_investment)**(alpha - 1)) * invest * (score / avg_score))
             dir.update({f'{startup_name}' : formula}) 
         index += 1
     await ctx.send(f'ICISTS 투자게임 - {round_num}라운드 각 팀에게 돌려줄 금액 계산이 완료되었습니다. ')
