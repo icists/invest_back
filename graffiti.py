@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.3.6')
+    await ctx.send('ver 2.3.7')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -84,21 +84,37 @@ async def function1(ctx , input):
     dir_valuation = db.reference(f'rounds/{round_num}/valuation')
     dict_result = {}
     dict_valuation = {}
-    for team_num in range(1,team_number+1):
-        dict_startup = {}
-        index = 0
-        for startup_name in startup_list:
-            score = dict_score[startup_name]
-            invest = dict_invest[team_num][startup_name]
-            valuation = int((invest_list[index]/avg_investment)**(alpha) * (score / avg_score) * avg_investment)
-            dict_valuation[startup_name] = valuation
-            formula = int(((invest_list[index]/avg_investment)**(alpha - 1)) * invest * (score / avg_score))
-            dict_startup[startup_name] = formula
-            index += 1
-        dict_result[team_num] = dict_startup
-    dir_result.update(dict_result)
-    dir_valuation.update(dict_valuation)
-    await ctx.send(f'ICISTS 투자게임 - {round_num}라운드 각 팀에게 돌려줄 금액 계산이 완료되었습니다. ')
+    if(int(round_num) != 3 ):
+        for team_num in range(1,team_number+1):
+            dict_startup = {}
+            index = 0
+            for startup_name in startup_list:
+                score = dict_score[startup_name]
+                invest = dict_invest[team_num][startup_name]
+                valuation = int((invest_list[index]/avg_investment)**(alpha) * (score / avg_score) * avg_investment)
+                dict_valuation[startup_name] = valuation
+                formula = int(((invest_list[index]/avg_investment)**(alpha - 1)) * invest * (score / avg_score))
+                dict_startup[startup_name] = formula
+                index += 1
+            dict_result[team_num] = dict_startup
+        dir_result.update(dict_result)
+        dir_valuation.update(dict_valuation)
+        await ctx.send(f'ICISTS 투자게임 - {round_num}라운드 각 팀에게 돌려줄 금액 계산이 완료되었습니다. ')
+    else :
+        for team_num in range(1,team_number+1):
+            dict_startup = {}
+            index = 0
+            for startup_name in startup_list:
+                invest = dict_invest[team_num][startup_name]
+                valuation = int((invest_list[index]/avg_investment)**(alpha)  * avg_investment)
+                dict_valuation[startup_name] = valuation
+                formula = int(((invest_list[index]/avg_investment)**(alpha - 1)) * invest)
+                dict_startup[startup_name] = formula
+                index += 1
+            dict_result[team_num] = dict_startup
+        dir_result.update(dict_result)
+        dir_valuation.update(dict_valuation)
+        await ctx.send(f'ICISTS 투자게임 - {round_num}라운드 각 팀에게 돌려줄 금액 계산이 완료되었습니다. ')
 
 @bot.command()
 async def function2(ctx):
