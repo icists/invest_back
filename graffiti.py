@@ -128,7 +128,7 @@ async def function2(ctx):
         for startup_name in startup_list:
             team_account += dict_result[team_num][startup_name]
         dict_team[team_num]['account'] = team_account
-    await ctx.send('완료')
+    await ctx.send(dict_team)
     dir_team.update(dict_team)
 
     await ctx.send(f'ICISTS 투자게임 - {round_num}라운드 각 팀의 투자 결과 정산이 완료되었습니다')
