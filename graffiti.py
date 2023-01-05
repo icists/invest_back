@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.3.3')
+    await ctx.send('ver 2.3.4')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -112,7 +112,7 @@ async def function2(ctx):
     dict_invest = db.reference(f'rounds/{round_num}/investAmount').get()
     dir_team = db.reference('teams')
     dict_team = dir_team.get()
-    await ctx.send(dict_team)
+    dict = {}
     balance = [0] * 25 # 팀별 잔액, 인덱스 0은 사용 안함
 
     for team_num in range(1,team_number+1):
@@ -129,8 +129,8 @@ async def function2(ctx):
         for startup_name in startup_list:
             team_account += dict_result[team_num][startup_name]
         dict_team[team_num]['account'] = team_account
-    await ctx.send(dict_team)
-    dir_team.update(dict_team)
+    dict[team_num] = dict_team[team_num]
+    dir_team.update(dict)
 
     await ctx.send(f'ICISTS 투자게임 - {round_num}라운드 각 팀의 투자 결과 정산이 완료되었습니다')
 
