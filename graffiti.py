@@ -112,7 +112,7 @@ async def function2(ctx):
     dict_invest = db.reference(f'rounds/{round_num}/investAmount').get()
     dir_team = db.reference('teams')
     dict_team = dir_team.get()
-    await(dict_team)
+    await ctx.send(dict_team)
     balance = [0] * 25 # 팀별 잔액, 인덱스 0은 사용 안함
 
     for team_num in range(1,team_number+1):
