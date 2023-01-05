@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.3.4')
+    await ctx.send('ver 2.3.5')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -146,7 +146,7 @@ async def base_setting(ctx, round_num):
     for team_num in range(1,team_number+1):
         dir = db.reference(f'rounds/{round_num}/investAmount')
         dir.update({
-            f'{team_num}' : 0
+            f'{team_num}' : 0   
         })
     
     for team_num in range(1,team_number+1):
@@ -186,17 +186,26 @@ async def setting(ctx, round_num):
             'account' : defaultmoney
         })
 
+    list_ran = [0] * 8
+    sum = 0
+    for i in range(8):
+        list_ran[i] = random.random()
+        sum += list_ran[i]
+    list_ratio = [0] * 8
+    for i in range(8):
+        list_ratio[i] = list_ran[i] / sum
+
     for team_num in range(1, team_number + 1):
         dir_investAmount= db.reference(f'rounds/{round_num}/investAmount/{team_num}/')
         dir_investAmount.set({ 
-            f'{startup_list[0]}' : int(random.random()*125000),
-            f'{startup_list[1]}' : int(random.random()*125000),
-            f'{startup_list[2]}' : int(random.random()*125000),
-            f'{startup_list[3]}' : int(random.random()*125000),
-            f'{startup_list[4]}' : int(random.random()*125000),
-            f'{startup_list[5]}' : int(random.random()*125000),
-            f'{startup_list[6]}' : int(random.random()*125000),
-            f'{startup_list[7]}' : int(random.random()*125000)
+            f'{startup_list[0]}' : int(list_ratio[0]* defaultmoney),
+            f'{startup_list[1]}' : int(list_ratio[1]* defaultmoney),
+            f'{startup_list[2]}' : int(list_ratio[2]* defaultmoney),
+            f'{startup_list[3]}' : int(list_ratio[3]* defaultmoney),
+            f'{startup_list[4]}' : int(list_ratio[4]* defaultmoney),
+            f'{startup_list[5]}' : int(list_ratio[5]* defaultmoney),
+            f'{startup_list[6]}' : int(list_ratio[6]* defaultmoney),
+            f'{startup_list[7]}' : int(list_ratio[7]* defaultmoney)
 
         })
     for team_num in range(1, team_number + 1):
