@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.3.2')
+    await ctx.send('ver 2.3.3')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -112,6 +112,7 @@ async def function2(ctx):
     dict_invest = db.reference(f'rounds/{round_num}/investAmount').get()
     dir_team = db.reference('teams')
     dict_team = dir_team.get()
+    await(dict_team)
     balance = [0] * 25 # 팀별 잔액, 인덱스 0은 사용 안함
 
     for team_num in range(1,team_number+1):
