@@ -26,7 +26,7 @@ firebase_admin.initialize_app(cred,{
 global team_number
 global startup_list 
 startup_list = ['QTC','AET','INB','SHZ','RFY','SWT','NUT','NUV']
-team_number = 17
+team_number = 18
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
