@@ -129,7 +129,7 @@ async def function2(ctx):
     dir_team = db.reference('teams')
     dict_team = dir_team.get()
     dict = {}
-    balance = [0] * 25 # 팀별 잔액, 인덱스 0은 사용 안함
+    balance = [0] * 26 # 팀별 잔액, 인덱스 0은 사용 안함
 
     for team_num in range(1,team_number+1):
         total_invest_eachTeam = 0
