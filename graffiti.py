@@ -26,11 +26,11 @@ firebase_admin.initialize_app(cred,{
 global team_number
 global startup_list 
 startup_list = ['QTC','AET','INB','SHZ','RFY','SWT','NUT','NUV']
-team_number = 24
+team_number = 17
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.3.7')
+    await ctx.send('ver 2.3.8')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -202,7 +202,7 @@ async def setting(ctx, round_num):
             'account' : defaultmoney
         })
 
-
+    '''
     for team_num in range(1, team_number + 1):
         list_ran = [0] * 8
         sum = 0
@@ -222,6 +222,20 @@ async def setting(ctx, round_num):
             f'{startup_list[5]}' : int(list_ratio[5]* defaultmoney),
             f'{startup_list[6]}' : int(list_ratio[6]* defaultmoney),
             f'{startup_list[7]}' : int(list_ratio[7]* defaultmoney)
+
+        })
+    '''
+    for team_num in range(1, team_number + 1):
+        dir_investAmount= db.reference(f'rounds/{round_num}/investAmount/{team_num}/')
+        dir_investAmount.set({ 
+            f'{startup_list[0]}' : 0,
+            f'{startup_list[1]}' : 0,
+            f'{startup_list[2]}' : 0,
+            f'{startup_list[3]}' : 0,
+            f'{startup_list[4]}' : 0,
+            f'{startup_list[5]}' : 0,
+            f'{startup_list[6]}' : 0,
+            f'{startup_list[7]}' : 0
 
         })
     for team_num in range(1, team_number + 1):
