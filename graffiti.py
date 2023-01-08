@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.5.0')
+    await ctx.send('ver 2.5.1')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -265,5 +265,5 @@ async def making(ctx):
     dir.update({
         4 : 'account'
     })
-
+    ctx.send('4라운드 설정 완료')
 bot.run(os.environ['token'])
