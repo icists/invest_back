@@ -30,28 +30,23 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.4.1')
+    await ctx.send('ver 2.5.0')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
-    if int(set_round_num) == 0 or int(set_round_num) == 1 or int(set_round_num) == 2 or int(set_round_num) == 3: #라운드 범위 체크 필요
-        dir = db.reference('status')
-        dir.update({'currentRound': int(set_round_num)})
-        await ctx.send(f'ICISTS 투자게임 - 현재 {set_round_num}라운드로 설정되었습니다.')
-    elif int(set_round_num) == 999:
-        dir = db.reference('status')
-        dir.update({'currentRound': int(set_round_num)})
-        await ctx.send(f'ICISTS 투자게임 - 현재 999 라운드로 설정되었습니다.\nICISTS 투자게임 - 현재 설정 중입니다')
-    else:
-        await ctx.send(f'ICISTS 투자게임 - 올바른 숫자를 입력해주세요.')
+    dir = db.reference('status')
+    dir.update({'currentRound': int(set_round_num)})
+    await ctx.send(f'ICISTS 투자게임 - 현재 {set_round_num}라운드로 설정되었습니다.')
+    
 
 @bot.command()
-async def function1(ctx , input):
+async def function1(ctx , input1, input2):
     dir_round_num = db.reference('status/currentRound')
     round_num = dir_round_num.get() 
     total_investment = 0
     
-    alpha = float(input)
+    alpha = float(input1)
+    beta = float(input2)
 
     await ctx.send(f'function1 작동 시작')
 
@@ -91,16 +86,16 @@ async def function1(ctx , input):
             for startup_name in startup_list:
                 score = dict_score[startup_name]
                 invest = dict_invest[team_num][startup_name]
-                valuation = int((invest_list[index]/avg_investment)**(alpha) * (score / avg_score) * avg_investment)
+                valuation = int((invest_list[index]/avg_investment)**(alpha) * (score / avg_score)**(beta) * avg_investment)
                 dict_valuation[startup_name] = valuation
-                formula = int(((invest_list[index]/avg_investment)**(alpha - 1)) * invest * (score / avg_score))
+                formula = int(((invest_list[index]/avg_investment)**(alpha - 1)) * invest * (score / avg_score)**(beta))
                 dict_startup[startup_name] = formula
                 index += 1
             dict_result[team_num] = dict_startup
         dir_result.update(dict_result)
         dir_valuation.update(dict_valuation)
         await ctx.send(f'ICISTS 투자게임 - {round_num}라운드 각 팀에게 돌려줄 금액 계산이 완료되었습니다. ')
-    else :
+    elif int(round_num) == 3 :
         for team_num in range(1,team_number+1):
             dict_startup = {}
             index = 0
@@ -123,32 +118,23 @@ async def function2(ctx):
 
     await ctx.send(f'function2 작동 시작')
 
+    dir_invest = db.reference(f'rounds/{round_num}/investAmount')
+    dict_invest = dir_invest.get()
     dir_result = db.reference(f'rounds/{round_num}/investResult')
     dict_result = dir_result.get()
-    dir_team = db.reference('teams')
-    dict_invest = db.reference(f'rounds/{round_num}/investAmount').get()
-    dict_team = dir_team.get()
-    dict = {}
-    balance = [0] * 25 # 팀별 잔액, 인덱스 0은 사용 안함
+    dir_account = db.reference(f'rounds/{round_num}/account')
+    dict_account = dir_account.get()
+    dict_nextAccount = {}
 
     for team_num in range(1,team_number+1):
-        total_invest_eachTeam = 0
         for startup_name in startup_list:
-            total_invest_eachTeam += dict_invest[team_num][startup_name]
-        balance[team_num] = dict_team[team_num]['account'] - total_invest_eachTeam
+            dict_account[team_num] -= dict_invest[team_num][startup_name]
+            dict_account[team_num] += dict_result[team_num][startup_name]
+        dict_nextAccount[team_num] = dict_account[team_num]
+    dir_nextAccount = db.reference(f'rounds/{round_num+1}/account')
+    dir_nextAccount.update(dict_nextAccount)
 
-    await ctx.send('ICISTS 투자게임 - 각 팀의 투자 후 잔액 처리 완료')
-    await ctx.send(balance)
-
-    for team_num in range(1,team_number+1):
-        team_account = balance[team_num]
-        for startup_name in startup_list:
-            team_account += dict_result[team_num][startup_name]
-        dict_team[team_num]['account'] = team_account
-        dict[team_num] = dict_team[team_num]
-    dir_team.update(dict)
-
-    await ctx.send(f'ICISTS 투자게임 - {round_num}라운드 각 팀의 투자 결과 정산이 완료되었습니다')
+    await ctx.send(f'ICISTS 투자게임 - {round_num}라운드 각 팀의 투자 결과 정산이 완료되었습니다')   
 
 @bot.command()
 async def base_setting(ctx, round_num):
@@ -194,9 +180,9 @@ async def setting_defaultmoney(ctx):
     defaultmoney = 1000000
 
     for team_num in range(1,team_number+1):
-        dir = db.reference(f'teams/{team_num}')
+        dir = db.reference('rounds/0/account')
         dir.update({
-            'account' : defaultmoney
+            f'{team_num}' : defaultmoney
         })
     await ctx.send('ICISTS 투자게임 - 기본금 지급이 완료되었습니다.')
     
@@ -273,5 +259,11 @@ async def setting(ctx, round_num):
             f'{startup_name}' : 0
         })
     await ctx.send(f'ICISTS 투자게임 - Firebase 데이터 기본 설정이 완료되었습니다.\n')
+
+async def making(ctx):
+    dir = db.reference('rounds')
+    dir.update({
+        4 : 'account'
+    })
 
 bot.run(os.environ['token'])
