@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.5.1')
+    await ctx.send('ver 2.5.2')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -261,9 +261,10 @@ async def setting(ctx, round_num):
     await ctx.send(f'ICISTS 투자게임 - Firebase 데이터 기본 설정이 완료되었습니다.\n')
 
 async def making(ctx):
-    dir = db.reference('rounds')
-    dir.update({
-        4 : 'account'
-    })
+    dir = db.reference('rounds/4/account')
+    for team_num in range(1,team_number+1):
+        dir.update({
+            f'{team_num}' : 0
+        })
     ctx.send('4라운드 설정 완료')
 bot.run(os.environ['token'])
