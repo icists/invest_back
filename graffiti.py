@@ -260,6 +260,7 @@ async def setting(ctx, round_num):
         })
     await ctx.send(f'ICISTS 투자게임 - Firebase 데이터 기본 설정이 완료되었습니다.\n')
 
+@bot.command()
 async def making(ctx):
     await ctx.send('시작')
     dict = {}
