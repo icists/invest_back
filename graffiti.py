@@ -266,5 +266,6 @@ async def making(ctx):
         dir.update({
             f'{team_num}' : 0
         })
-    ctx.send('4라운드 설정 완료')
+    await ctx.send('4라운드 설정 완료')
+    
 bot.run(os.environ['token'])
