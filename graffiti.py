@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.5.7')
+    await ctx.send('ver 2.5.8')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -261,22 +261,16 @@ async def setting(ctx, round_num):
     await ctx.send(f'ICISTS 투자게임 - Firebase 데이터 기본 설정이 완료되었습니다.\n')
 
 @bot.command()
-async def making(ctx , round_num):
-
-    dict = {}
-    for i in range(1,25):
-        dict[i] = 0
-
-    dir = db.reference(f'rounds/{round_num}/account')
-    dir.update(dict)
-
-    await ctx.send(f'{round_num}라운드 설정 완료')
-@bot.command()
 async def pitching(ctx, startup_name):
-    dir = db.reference("status/currentPiching")
+    dir = db.reference("status")
     if startup_name in startup_list:
-        dir.update(startup_name)
+        dir.update({
+            'currentPitching' : startup_name
+        })
     else:
-        dir.update('')
+        dir.update({
+            'currentPitching' : ''
+        })
+    await ctx.send('ICISTS 투자 게임 - 피칭 기업 설정 완료')
 
 bot.run(os.environ['token'])
