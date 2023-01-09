@@ -30,7 +30,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.5.6')
+    await ctx.send('ver 2.5.7')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -271,5 +271,12 @@ async def making(ctx , round_num):
     dir.update(dict)
 
     await ctx.send(f'{round_num}라운드 설정 완료')
+@bot.command()
+async def pitching(ctx, startup_name):
+    dir = db.reference("status/currentPiching")
+    if startup_name in startup_list:
+        dir.update(startup_name)
+    else:
+        dir.update('')
 
 bot.run(os.environ['token'])
