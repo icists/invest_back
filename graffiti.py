@@ -285,5 +285,5 @@ async def ranking(ctx):
         for startup_name in startup_list:
             dict_rank[startup_name] += dict[startup_name]
     dict_rank = sorted(dict_rank.items(), key = lambda x : x[1])
-    print(dict_rank)
+    await ctx.send(dict_rank)
 bot.run(os.environ['token'])
