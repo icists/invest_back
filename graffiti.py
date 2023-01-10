@@ -10,6 +10,7 @@ import random
 
 import json
 
+import operator
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
@@ -30,7 +31,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.5.8')
+    await ctx.send('ver 2.6.0')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -273,4 +274,16 @@ async def pitching(ctx, startup_name):
         })
     await ctx.send('ICISTS 투자 게임 - 피칭 기업 설정 완료')
 
+@bot.command()
+async def ranking(ctx):
+    dict_rank = {}
+    for startup_name in startup_list :
+        dict_rank[startup_name] = 0
+    for round_num in range(4):
+        dir = db.reference(f'rounds/{round_num}/valuation')
+        dict = dir.get()
+        for startup_name in startup_list:
+            dict_rank[startup_name] += dict[startup_name]
+    dict_rank = sorted(dict_rank.items(), key = lambda x : x[1])
+    print(dict_rank)
 bot.run(os.environ['token'])
