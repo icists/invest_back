@@ -31,7 +31,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.6.0')
+    await ctx.send('ver 2.6.1')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -293,9 +293,10 @@ async def ranking_team(ctx):
     dict_account = dir.get()
 
     dict_rank = sorted(dict_account.items(), key = lambda x : x[1] , reverse = True )
+
     await ctx.send(dict_rank)
     list = [ 1, 4, 9 , 16]
-    for rank in range(list):
+    for rank in list:
         await ctx.send(f'{rank}등 팀 : {dict_rank[rank]}')
 
 
