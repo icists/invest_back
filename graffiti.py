@@ -265,7 +265,7 @@ async def ranking_startup(ctx):
 
 @bot.command()
 async def ranking_team(ctx):
-    dir = db.reference('rounds/4/account')
+    dir = db.reference('rounds/4')
     dict_account = dir.get()
     await ctx.send(dict_account)
 
