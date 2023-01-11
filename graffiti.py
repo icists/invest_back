@@ -275,7 +275,7 @@ async def pitching(ctx, startup_name):
     await ctx.send('ICISTS 투자 게임 - 피칭 기업 설정 완료')
 
 @bot.command()
-async def ranking(ctx):
+async def ranking_startup(ctx):
     dict_rank = {}
     for startup_name in startup_list :
         dict_rank[startup_name] = 0
@@ -286,4 +286,18 @@ async def ranking(ctx):
             dict_rank[startup_name] += dict[startup_name]
     dict_rank = sorted(dict_rank.items(), key = lambda x : x[1])
     await ctx.send(dict_rank)
+
+@bot.command()
+async def ranking_team(ctx):
+    dir = db.reference('rounds/4/account')
+    dict_account = dir.get()
+
+    dict_rank = sorted(dict_account.items(), key = lambda x : x[1] , reverse = True )
+    await ctx.send(dict_rank)
+    list = [ 1, 4, 9 , 16]
+    for rank in range(list):
+        await ctx.send(f'{rank}등 팀 : {dict_rank[rank]}')
+
+
+
 bot.run(os.environ['token'])
