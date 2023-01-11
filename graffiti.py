@@ -21,7 +21,7 @@ client = discord.Client()
 
 cred = credentials.Certificate('investment-game-e04fb-firebase-adminsdk-q4spd-bcff64ea68.json') 
 firebase_admin.initialize_app(cred,{
-    'databaseURL' : 'https://investment-game-e04fb-default-rtdb.asia-southeast1.firebasedatabase.app/'
+    'databaseURL' : 'https://investment-game-test.asia-southeast1.firebasedatabase.app/'
 })
 
 global team_number
