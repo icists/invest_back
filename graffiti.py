@@ -281,8 +281,8 @@ async def ranking_team(ctx):
 async def setseat(ctx):
     dict = {1: {1: None, 2: 'NUV', 3: 'AET', 4: 'INB', 5: 'RFY', 6: None}, 2: {1: 'NUV', 2: 'AET', 3: 'INB', 4: 'RFY', 5: None, 6: None}, 3: {1: 'SHZ', 2: 'QTC', 3: None, 4: None, 5: 'SWT', 6: 'NUT'}, 4: {1: None, 2: None, 3: 'NUV', 4: 'AET', 5: 'INB', 6: 'RFY'}, 5: {1: 'RFY', 2: None, 3: None, 4: 'NUV', 5: 'AET', 6: 'INB'}, 6: {1: 'QTC', 2: None, 3: None, 4: 'SWT', 5: 'NUT', 6: 'SHZ'}, 7: {1: 'NUT', 2: 'SHZ', 3: 'QTC', 4: None, 5: None, 6: 'SWT'}, 8: {1: None, 2: None, 3: 'SWT', 4: 'NUT', 5: 'SHZ', 6: 'QTC'}, 9: {1: 'QTC', 2: None, 3: None, 4: 'SWT', 5: 'NUT', 6: 'SHZ'}, 10: {1: 'SHZ', 2: 'QTC', 3: None, 4: None, 5: 'SWT', 6: 'NUT'}, 11: {1: 'SWT', 2: 'NUT', 3: 'SHZ', 4: 'QTC', 5: None, 6: None}, 12: {1: None, 2: 'SWT', 3: 'NUT', 4: 'SHZ', 5: 'QTC', 6: None}, 13: {1: 'AET', 2: 'INB', 3: 'RFY', 4: None, 5: None, 6: 'NUV'}, 14: {1: 'NUV', 2: 'AET', 3: 'INB', 4: 'RFY', 5: None, 6: None}, 15: {1: None, 2: None, 3: 'SWT', 4: 'NUT', 5: 'SHZ', 6: 'QTC'}, 16: {1: 'RFY', 2: None, 3: None, 4: 'NUV', 5: 'AET', 6: 'INB'}, 17: {1: 'INB', 2: 'RFY', 3: None, 4: None, 5: 'NUV', 6: 'AET'}, 18: {1: 'NUT', 2: 'SHZ', 3: 'QTC', 4: None, 5: None, 6: 'SWT'}, 19: {1: None, 2: None, 3: 'NUV', 4: 'AET', 5: 'INB', 6: 'RFY'}, 20: {1: 'SWT', 2: 'NUT', 3: 'SHZ', 4: 'QTC', 5: None, 6: None}, 21: {1: None, 2: 'SWT', 3: 'NUT', 4: 'SHZ', 5: 'QTC', 6: None}, 22: {1: 'AET', 2: 'INB', 3: 'RFY', 4: None, 5: None, 6: 'NUV'}, 23: {1: 'INB', 2: 'RFY', 3: None, 4: None, 5: 'NUV', 6: 'AET'}, 24: {1: None, 2: 'NUV', 3: 'AET', 4: 'INB', 5: 'RFY', 6: None}}
     for team_num in range(1,team_number+1):
-            dir = db.reference(f'teams/{team_num}/track')
-            dir.update(dict[team_num])
+            dir = db.reference(f'teams/{team_num}')
+            dir.update({'track' : dict[team_num]})
 
 
 bot.run(os.environ['token'])
