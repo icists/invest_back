@@ -31,7 +31,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.6.1')
+    await ctx.send('ver 2.6.2')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -191,30 +191,6 @@ async def setting_defaultmoney(ctx, round):
 @bot.command()
 async def setting(ctx, round_num):
     await ctx.send(f'ICISTS 투자게임 - {round_num} 라운드 Firebase 데이터베이스 설정을 시작합니다.\n')
-
-    '''
-    for team_num in range(1, team_number + 1):
-        list_ran = [0] * 8
-        sum = 0
-        for i in range(8):
-            list_ran[i] = random.random()
-            sum += list_ran[i]
-        list_ratio = [0] * 8
-        for i in range(8):
-            list_ratio[i] = list_ran[i] / sum
-        dir_investAmount= db.reference(f'rounds/{round_num}/investAmount/{team_num}/')
-        dir_investAmount.set({ 
-            f'{startup_list[0]}' : int(list_ratio[0]* defaultmoney),
-            f'{startup_list[1]}' : int(list_ratio[1]* defaultmoney),
-            f'{startup_list[2]}' : int(list_ratio[2]* defaultmoney),
-            f'{startup_list[3]}' : int(list_ratio[3]* defaultmoney),
-            f'{startup_list[4]}' : int(list_ratio[4]* defaultmoney),
-            f'{startup_list[5]}' : int(list_ratio[5]* defaultmoney),
-            f'{startup_list[6]}' : int(list_ratio[6]* defaultmoney),
-            f'{startup_list[7]}' : int(list_ratio[7]* defaultmoney)
-
-        })
-    '''
     for team_num in range(1, team_number + 1):
         dir_investAmount= db.reference(f'rounds/{round_num}/investAmount/{team_num}/')
         dir_investAmount.set({ 
@@ -291,8 +267,9 @@ async def ranking_startup(ctx):
 async def ranking_team(ctx):
     dir = db.reference('rounds/4/account')
     dict_account = dir.get()
+    await ctx.send(dict_account)
 
-    dict_rank = sorted(dict_account.items(), key = lambda x : x[1] , reverse = True )
+    dict_rank = sorted(dict_account.items(), key = lambda x : x[1], reverse= True)
 
     await ctx.send(dict_rank)
     list = [ 1, 4, 9 , 16]
