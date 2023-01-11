@@ -276,7 +276,7 @@ async def ranking_team(ctx):
     await ctx.send(dict_rank)
     list = [ 1, 4, 9 , 16]
     for rank in list:
-        await ctx.send(f'{rank}등 팀 : {dict_rank[rank]}')
+        await ctx.send(f'{rank}등 팀 : {dict_rank[rank - 1]}')
 
 
 
