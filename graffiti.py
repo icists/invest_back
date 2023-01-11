@@ -265,11 +265,12 @@ async def ranking_startup(ctx):
 
 @bot.command()
 async def ranking_team(ctx):
-    dir = db.reference('rounds/4')
+    dir = db.reference('rounds/4/account')
     dict_account = dir.get()
     await ctx.send(dict_account)
-
-    dict_rank = sorted(dict_account.items(), key = lambda x : x[1], reverse= True)
+    for team_num in range(1,team_number+1):
+        dict_rank[team_num] = dict_account[team_num]
+    dict_rank = sorted(dict_rank.items(), key = lambda x : x[1], reverse= True)
 
     await ctx.send(dict_rank)
     list = [ 1, 4, 9 , 16]
