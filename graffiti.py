@@ -177,11 +177,11 @@ async def unable(ctx):
     await ctx.send('ICISTS 투자게임 - 현재 투자가 불가능하게 되었습니다.')
 
 @bot.command()
-async def setting_defaultmoney(ctx, team_num):
+async def setting_defaultmoney(ctx, round):
     defaultmoney = 0
 
     for team_num in range(1,team_number+1):
-        dir = db.reference(f'rounds/{team_num}/account')
+        dir = db.reference(f'rounds/{round}/account')
         dir.update({
             f'{team_num}' : defaultmoney
         })
