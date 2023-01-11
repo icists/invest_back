@@ -244,14 +244,14 @@ async def setting(ctx, round_num):
     
     dir_score = db.reference(f'rounds/{round_num}/score')
     dir_score.set({
-        f'{startup_list[0]}' : 9,
-        f'{startup_list[1]}' : 8,
-        f'{startup_list[2]}' : 4,
-        f'{startup_list[3]}' : 6,
-        f'{startup_list[4]}' : 5,
-        f'{startup_list[5]}' : 4,
-        f'{startup_list[6]}' : 4,
-        f'{startup_list[7]}' : 6
+        f'{startup_list[0]}' : 0,
+        f'{startup_list[1]}' : 0,
+        f'{startup_list[2]}' : 0,
+        f'{startup_list[3]}' : 0,
+        f'{startup_list[4]}' : 0,
+        f'{startup_list[5]}' : 0,
+        f'{startup_list[6]}' : 0,
+        f'{startup_list[7]}' : 0
     })
 
     for startup_name in startup_list :
