@@ -31,7 +31,7 @@ team_number = 24
 
 @bot.command(aliases=['hi'])
 async def hello(ctx):
-    await ctx.send('ver 2.6.2')
+    await ctx.send('ver 3.0.0')
 
 @bot.command()
 async def set_round(ctx, set_round_num):
@@ -283,6 +283,10 @@ async def setseat(ctx):
     for team_num in range(1,team_number+1):
             dir = db.reference(f'teams/{team_num}')
             dir.update({'track' : dict[team_num]})
+
+@bot.command()
+async def team_matching(ctx):
+    await ctx.send('미구현')
 
 
 bot.run(os.environ['token'])
